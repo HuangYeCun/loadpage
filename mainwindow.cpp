@@ -15,15 +15,21 @@ MainWindow::MainWindow(QWidget *parent)
   //  pwebengine->show();
 
   pwebbrowser = new WebBrowser(this);
-  // pwebbrowser->load(QUrl("http://localhost:8080/VideoMeetingManage/main/index"));
-  pwebbrowser->load(QUrl("https://wenku.baidu.com/apps?fr=1011"));
+   pwebbrowser->load(QUrl("http://localhost:8080/VideoMeetingManage/main/index"));
+//  pwebbrowser->load(QUrl("https://wenku.baidu.com/apps?fr=1011"));
   setCentralWidget(pwebbrowser);
 
-  connect(pwebbrowser, &WebBrowser::dataChangedSignal, this,
+  connect(pwebbrowser, &WebBrowser::data_changed_signal, this,
           &MainWindow::appendSlot);
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+    delete ui;
+    if(pwebbrowser) {
+        delete pwebbrowser;
+        pwebbrowser= Q_NULLPTR;
+    }
+}
 
 // void MainWindow::resizeEvent(QResizeEvent *) {
 //  //  pwebengine->resize(this->size());

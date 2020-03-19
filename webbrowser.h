@@ -3,6 +3,8 @@
 
 #include <QWebEngineView>
 
+class QWebEngineDownloadItem;
+
 class WebBrowser : public QWebEngineView {
   Q_OBJECT
  public:
@@ -16,16 +18,16 @@ class WebBrowser : public QWebEngineView {
   * @return
   */
   QWebEngineView *createWindow(QWebEnginePage::WebWindowType type);
+  void AccessFinished(QWebEngineDownloadItem* downloaditem);
 
 signals:
-  void downloadRequestedSignal(QWebEngineDownloadItem *softdownload);
-  void dataChangedSignal(qint64, qint64);
+  void status_changed_signal();
+  void data_changed_signal(qint64, qint64);
 
  public slots:
-  void downloadJumpSlot(QWebEngineDownloadItem *softdownload);
-
-  void setCurrentProgressSlot(qint64 bytesreceived, qint64 bytestotal);
-  void accessFinishedSlot();
+  void on_download_requested(QWebEngineDownloadItem *softdownload);
+  void on_setcurrent_progress(qint64 bytesreceived, qint64 bytestotal);
+  void on_status_changed(QWebEngineDownloadItem* downloaditem);
 
  private:
   WebBrowser *pview = Q_NULLPTR;
